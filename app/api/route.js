@@ -1,13 +1,34 @@
 import { connectDB } from "@/lib/config/Db";
 import { NextResponse } from "next/server";
+import TodoModel from "@/lib/models/TodoModel";
 
-const LoadDB = async()=>{
+export async function GET(request) {
+  try {
     await connectDB();
+    return NextResponse.json({ msg: "GET method hint" });
+  } catch (error) {
+    console.error("GET Error:", error);
+    return NextResponse.json({ msg: "Server error" }, { status: 500 });
+  }
 }
+export async function POST(request) {
+  try {
+    await connectDB(); // Ensure DB is connected before proceeding
 
-LoadDB();
+    const { title, description } = await request.json();
 
+    if (!title || !description) {
+      return NextResponse.json(
+        { msg: "Title and Description are required" },
+        { status: 400 }
+      );
+    }
 
-export async function GET(request){
-    return NextResponse.json({msg:"get method hint"}) 
+    const todo = await TodoModel.create({ title, description });
+
+    return NextResponse.json({ msg: "Todo Created", todo }, { status: 201 });
+  } catch (error) {
+    console.error("POST Error:", error);
+    return NextResponse.json({ msg: "Server error" }, { status: 500 });
+  }
 }

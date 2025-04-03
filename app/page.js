@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Todo from "../Components/todo";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 export default function Home() {
   const [formData, setFormData] = useState({
     title: "",
@@ -18,8 +19,8 @@ export default function Home() {
     e.preventDefault();
     try {
       //api code
-
-      toast.success("Todo Added Successfully");
+      const response = await axios.post("http://localhost:3000/api", formData);
+      toast.success(response.data.msg);
     } catch (error) {
       toast.error("Something went wrong");
       console.log(error);
