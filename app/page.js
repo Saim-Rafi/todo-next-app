@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Todo from "../Components/todo";
+import Todo from "./Components/todo";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 export default function Home() {
@@ -28,6 +28,24 @@ export default function Home() {
           mongoId: id,
         },
       });
+      toast.success(response.data.msg);
+      await fetchTodos();
+    } catch (error) {
+      console.error("Delete Todo Error:", error);
+      toast.error("Failed to delete todo");
+    }
+  };
+  const UpdateTodo = async (id) => {
+    try {
+      const response = await axios.put(
+        "/api",
+        {},
+        {
+          params: {
+            mongoId: id,
+          },
+        }
+      );
       toast.success(response.data.msg);
       await fetchTodos();
     } catch (error) {
@@ -121,6 +139,7 @@ export default function Home() {
                   complete={item.isCompleted}
                   mongoId={item._id}
                   deleteTodo={deleteTodo}
+                  UpdateTodo={UpdateTodo}
                 />
               );
             })}
