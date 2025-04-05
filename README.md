@@ -3,6 +3,10 @@
 
 A full-stack Todo application built using **Next.js** and **MongoDB**. This app offers a smooth and responsive user experience, allowing users to easily manage their daily tasks.
 
+## 🔗 Live Demo
+
+👉 [**todo-next-app-pink.vercel.app**](https://todo-next-app-pink.vercel.app/)
+
 ## 🚀 Tech Stack
 
 - **Next.js** (App Router)
