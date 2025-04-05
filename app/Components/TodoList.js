@@ -1,84 +1,88 @@
+
 "use client";
 
-import { useState, useEffect } from "react";
 import TodoCard from "./TodoCard";
-import axios from "axios";
+import { toast } from 'react-toastify';
 
-export default function TodoList({ onSelectTodo, selectedTodoId ,onDeleteTodo}) {
-  const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchTodos = async (page = 1) => {
-    try {
-      setLoading(true);
+export default function TodoList({
+  todos,
+  loading,
+  fetchTodos,
+  onSelectTodo,
+  selectedTodoId,
+  onDeleteTodo,
+  currentPage,
+  totalPages,
+}) {
+  // const handleCreateTodo = async () => {
+  //   try {
+  //     const response = await fetch("/api/todos", {
+  //       method: "POST",
+  //     });
 
-      console.log("Fetching todos for page:", page);
-
-      const response = await axios.get(`/api/todos?page=${page}&limit=10`);
-
-      console.log("Response:", response.data);
-      console.log("Full response:", response);
-
-      const fetchedTodos = Array.isArray(response.data.todos)
-        ? response.data.todos
-        : [];
-
-      if (!response.data) {
-        throw new Error("No data received from API");
-      }
-
-      setTodos(fetchedTodos);
-      setTotalPages(response.data.totalPages || 1);
-      setCurrentPage(response.data.currentPage || page);
-    } catch (error) {
-      console.error("Error fetching todos:", {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-        config: error.config, // Shows the request config
-        stack: error.stack,
-      });
-      setTodos([]);
-      setTotalPages(1);
-      setCurrentPage(1);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTodos();
-  }, []);
+  //     const newTodo = await response.json();
+  //     fetchTodos(currentPage); // Refresh list after creation
+  //     onSelectTodo(newTodo);
+  //   } catch (error) {
+  //     console.error("Error creating todo:", error);
+  //   }
+  // };
 
   const handleCreateTodo = async () => {
     try {
-      const response = await axios.post("/api/todos",{
-        title:"New Additions",
-        description:"To stay representative of framework & new example apps.",
+      const response = await fetch("/api/todos", {
+        method: "POST",
       });
-      setTodos([response.data, ...todos]);
-      onSelectTodo(response.data);
+  
+      if (!response.ok) {
+        throw new Error("Failed to create todo");
+      }
+  
+      const newTodo = await response.json();
+      toast.success("Todo created!");
+      fetchTodos(currentPage); // Refresh list
+      onSelectTodo(newTodo);
     } catch (error) {
       console.error("Error creating todo:", error);
+      toast.error("Error creating todo.");
     }
   };
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
       fetchTodos(newPage);
     }
   };
 
+  // const handleDeleteTodo = async (deletedId) => {
+  //   try {
+  //     await fetch(`/api/todos/${deletedId}`, {
+  //       method: "DELETE",
+  //     });
+  //     onDeleteTodo?.(deletedId);
+  //     fetchTodos(currentPage); // Refresh list after deletion
+  //   } catch (error) {
+  //     console.error("Error deleting todo:", error);
+  //   }
+  // };
+
   const handleDeleteTodo = async (deletedId) => {
     try {
-      await axios.delete(`/api/todos/${deletedId}`);
-      setTodos(prevTodos => prevTodos.filter(todo => todo._id !== deletedId));
-      onDeleteTodo?.(deletedId); // call parent's delete handler
+      const response = await fetch(`/api/todos/${deletedId}`, {
+        method: "DELETE",
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to delete todo");
+      }
+  
+      toast.info("Todo deleted.");
+      onDeleteTodo?.(deletedId);
+      fetchTodos(currentPage);
     } catch (error) {
       console.error("Error deleting todo:", error);
+      toast.error("Error deleting todo.");
     }
   };
 
@@ -148,3 +152,4 @@ export default function TodoList({ onSelectTodo, selectedTodoId ,onDeleteTodo}) 
     </div>
   );
 }
+

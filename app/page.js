@@ -1,11 +1,37 @@
+
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoList from "./Components/TodoList";
 import TodoEditor from "./Components/TodoEditor";
 
 export default function Home() {
   const [selectedTodo, setSelectedTodo] = useState(null);
+  const [todos, setTodos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const fetchTodos = async (page = 1) => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/todos?page=${page}&limit=10`);
+      const data = await response.json();
+
+      setTodos(Array.isArray(data.todos) ? data.todos : []);
+      setCurrentPage(data.currentPage || 1);
+      setTotalPages(data.totalPages || 1);
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+      setTodos([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
 
   const handleSelectTodo = (todo) => {
     setSelectedTodo(todo);
@@ -14,13 +40,12 @@ export default function Home() {
   const handleUpdateTodo = (updatedTodo) => {
     setSelectedTodo(updatedTodo);
   };
-  const handleDeleteTodo = async (deletedId) => {
-    // Clear the editor if the deleted todo is selected
+
+  const handleDeleteTodo = (deletedId) => {
     if (selectedTodo && selectedTodo._id === deletedId) {
       setSelectedTodo(null);
     }
-
-    // Optionally, trigger a re-fetch in TodoList via a ref or state lift (more on this later)
+    fetchTodos(currentPage); // refresh the todo list after delete
   };
 
   return (
@@ -30,6 +55,11 @@ export default function Home() {
           <h1 className="text-xl font-bold">TODO</h1>
         </div>
         <TodoList
+          todos={todos}
+          loading={loading}
+          fetchTodos={fetchTodos}
+          currentPage={currentPage}
+          totalPages={totalPages}
           onSelectTodo={handleSelectTodo}
           selectedTodoId={selectedTodo?._id}
           onDeleteTodo={handleDeleteTodo}
@@ -46,3 +76,4 @@ export default function Home() {
     </main>
   );
 }
+

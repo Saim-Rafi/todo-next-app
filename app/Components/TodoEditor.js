@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import TodoToolbar from "./TodoToolbar";
+import { toast } from "react-toastify";
 
 export default function TodoEditor({ todo, onUpdate ,onDelete}) {
   const [title, setTitle] = useState("");
@@ -65,9 +66,11 @@ export default function TodoEditor({ todo, onUpdate ,onDelete}) {
 
     try {
       await axios.delete(`/api/todos/${todo._id}`);
+      toast.success("Todo deleted");
       onDelete(todo._id); // Notify parent to remove from list
     } catch (error) {
       console.error("Error deleting todo:", error);
+      toast.error("Failed to delete todo");
     }
   };
 
@@ -89,7 +92,7 @@ export default function TodoEditor({ todo, onUpdate ,onDelete}) {
           className="text-2xl font-bold w-full focus:outline-none"
         />
         <button
-          className="ml-4 text-red-500 hover:text-red-700 font-medium transition"
+          className="ml-4 px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ease-in-out hover:shadow-lg"
           onClick={handleDelete}
         >
           DELETE
