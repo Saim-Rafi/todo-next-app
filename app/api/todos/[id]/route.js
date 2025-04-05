@@ -1,4 +1,4 @@
-import connectDB from '@/lib/db';
+import connectDB from '@/lib/Db';
 import Todo from '@/lib/models/Todo';
 import { NextResponse } from 'next/server';
 
