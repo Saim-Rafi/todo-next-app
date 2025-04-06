@@ -10,9 +10,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/to-do-list.png" />
+      </head>
       <body>
         {children}
-        <ToastContainer positon="top-right" autoClose={2000} hideProgressBar theme="dark"/>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar
+          theme="dark"
+        />
       </body>
     </html>
   );
