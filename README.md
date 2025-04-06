@@ -3,6 +3,7 @@
 
 A full-stack Todo application built using **Next.js** and **MongoDB**. This app offers a smooth and responsive user experience, allowing users to easily manage their daily tasks.
 
+
 ## 🔗 Live Demo
 
 👉 [**todo-next-app-pink.vercel.app**](https://todo-next-app-pink.vercel.app/)
@@ -48,7 +49,7 @@ The user interface is designed to feel intuitive and fluid. Using React Toastify
 
 ## 🧪 Future Enhancements 
 
-- [x] **User Authentication** – Implement secure login/signup using [NextAuth.js](https://next-auth.js.org/)
+- [ ] **User Authentication** – Implement secure login/signup using [NextAuth.js](https://next-auth.js.org/)
 - [ ] **Calendar View** – Visualize todos in a calendar format for better date management
 - [ ] **Dark Mode Toggle** – Add a theme switcher for better accessibility and aesthetics
 - [ ] **Unit and Integration Testing** – Add robust testing using tools like Jest and React Testing Library
