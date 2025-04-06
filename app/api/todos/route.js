@@ -3,7 +3,7 @@ import Todo from "@/lib/models/Todo";
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
-  console.log("GET /api/todos called"); // Log entry point
+  console.log("GET /api/todos called");
 
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page")) || 1;
@@ -46,24 +46,23 @@ export async function GET(request) {
 
 export async function POST() {
   try {
-    console.log("🔥 POST /api/todos called");
+    console.log("POST /api/todos called");
     await connectDB();
-    console.log("✅ Connected to DB");
+    console.log("Connected to DB");
 
     const todo = new Todo({
       title: "New Additions",
       description: "To stay representative of framework & new example apps.",
     });
 
-    console.log("📝 Saving todo:", todo);
+    console.log("Saving todo:", todo);
     await todo.save();
 
-    console.log("✅ Todo saved:", todo);
+    console.log("Todo saved:", todo);
     return NextResponse.json(todo, { status: 201 });
   } catch (error) {
-    console.error("❌ POST /api/todos error:", error.message);
+    console.error("POST /api/todos error:", error.message);
     console.error(error.stack);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-

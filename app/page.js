@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -39,20 +38,26 @@ export default function Home() {
 
   const handleUpdateTodo = (updatedTodo) => {
     setSelectedTodo(updatedTodo);
+
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) => (todo._id === updatedTodo._id ? updatedTodo : todo))
+    );
   };
 
   const handleDeleteTodo = (deletedId) => {
     if (selectedTodo && selectedTodo._id === deletedId) {
       setSelectedTodo(null);
     }
-    fetchTodos(currentPage); // refresh the todo list after delete
+
+    //remove the todo from the todolist
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== deletedId));
   };
 
   return (
     <main className="flex min-h-screen">
       <div className="w-1/3 border-r">
         <div className="p-4 border-b">
-          <h1 className="text-xl font-bold">TODO</h1>
+          <h1 className="text-3xl font-extrabold">TODO</h1>
         </div>
         <TodoList
           todos={todos}

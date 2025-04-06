@@ -2,11 +2,11 @@ export default function TodoToolbar() {
   return (
     <div className="flex space-x-4 border-b pb-4 mb-4">
       <button className="font-bold">
-        <i class="bi bi-type-bold">B</i>
+        <i className="bi bi-type-bold">B</i>
       </button>
 
       <button className="italic">
-        <i class="bi bi-type-italic">I</i>
+        <i className="bi bi-type-italic">I</i>
       </button>
       <button className="underline">U</button>
       <button>
@@ -15,7 +15,7 @@ export default function TodoToolbar() {
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-justify"
+          className="bi bi-justify"
           viewBox="0 0 16 16"
         >
           <path
@@ -30,7 +30,7 @@ export default function TodoToolbar() {
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-justify-right"
+          className="bi bi-justify-right"
           viewBox="0 0 16 16"
         >
           <path
@@ -45,7 +45,7 @@ export default function TodoToolbar() {
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-text-center"
+          className="bi bi-text-center"
           viewBox="0 0 16 16"
         >
           <path
@@ -60,7 +60,7 @@ export default function TodoToolbar() {
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-list-ul"
+          className="bi bi-list-ul"
           viewBox="0 0 16 16"
         >
           <path
@@ -75,7 +75,7 @@ export default function TodoToolbar() {
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-list-ol"
+          className="bi bi-list-ol"
           viewBox="0 0 16 16"
         >
           <path
@@ -91,7 +91,7 @@ export default function TodoToolbar() {
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-palette"
+          className="bi bi-palette"
           viewBox="0 0 16 16"
         >
           <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
